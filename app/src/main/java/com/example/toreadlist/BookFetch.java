@@ -19,7 +19,6 @@ public class BookFetch {
     private ArrayList<String> authors;
 
 
-
     public String getTitle() {
         return title;
     }
@@ -102,7 +101,6 @@ public class BookFetch {
         this.authors = authors;
     }
 
-    //creating a constructr class for our BookInfo
     public BookFetch(String title,  String description, String publisher, String publishedDate,
                      int pageCount, Double averageRating,String imageUrl,
                      String bookDetailsLink, String buyLink,
