@@ -25,12 +25,12 @@ import java.util.ArrayList;
 import static com.example.toreadlist.BookValues.*;
 
 public class BookFetchDetails extends AppCompatActivity {
-    String title, subtitle, publisher, publishedDate, description, thumbnail, previewLink, infoLink, buyLink, language;
+    String title, publisher, publishedDate, description, thumbnail, previewLink, infoLink, buyLink, language, averageRating;
     int pageCount;
     private ArrayList<String> authors;
 
-    TextView titleTV, publisherTV, descTV, pageTV, publishDateTV, languageTV;
-    Button buyBtn;
+    TextView titleTV, publisherTV, descTV, pageTV, publishDateTV, languageTV, averageRatingTV;
+    Button bookDetailsFullInformationBtn;
     private ImageView bookIV;
 
 
@@ -46,7 +46,8 @@ public class BookFetchDetails extends AppCompatActivity {
         pageTV = findViewById(R.id.bookDetailsNoPagesTV);
         publishDateTV = findViewById(R.id.bookDetailsPublishDateTV);
         languageTV = findViewById(R.id.bookDetailsLanguageTV);
-        buyBtn = findViewById(R.id.bookDetailsBuyBtn);
+        averageRatingTV = findViewById(R.id.bookDetailsAverageRatingTV);
+        bookDetailsFullInformationBtn = findViewById(R.id.bookDetailsFullInformationBtn);
         bookIV = findViewById(R.id.bookDetailsIV);
 
 
@@ -60,6 +61,7 @@ public class BookFetchDetails extends AppCompatActivity {
         infoLink = getIntent().getStringExtra("bookDetailsLink");
         buyLink = getIntent().getStringExtra("buyLink");
         language = getIntent().getStringExtra("language");
+        averageRating = getIntent().getStringExtra("averageRating");
 
 
         titleTV.setText(title);
@@ -67,6 +69,7 @@ public class BookFetchDetails extends AppCompatActivity {
         publishDateTV.setText("Published On : " + publishedDate);
         descTV.setText(description);
         languageTV.setText(language);
+        averageRatingTV.setText(averageRating);
 
         pageTV.setText("# Of Pages : " + pageCount);
 
@@ -74,16 +77,16 @@ public class BookFetchDetails extends AppCompatActivity {
 
 
 
-        buyBtn.setOnClickListener(new View.OnClickListener() {
+        bookDetailsFullInformationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (buyLink.isEmpty()) {
+                if (infoLink.isEmpty()) {
 
                     Toast.makeText(BookFetchDetails.this, "There is no buy page exist in the Google Books API for this book...", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Uri uri = Uri.parse(buyLink);
+                Uri uri = Uri.parse(infoLink);
                 Intent i = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(i);
             }

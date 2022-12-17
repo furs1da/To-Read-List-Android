@@ -72,6 +72,16 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/bookDetailsAverageRatingTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:padding="4dp"
+                    android:text="Average Rating: "
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
                     android:id="@+id/bookDetailsLanguageTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,13 +126,13 @@
 
             <!--button for opening buying page of the book-->
             <Button
-                android:id="@+id/bookDetailsBuyBtn"
+                android:id="@+id/bookDetailsFullInformationBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="#006494"
-                android:text="Buy"
+                android:text="Google Books Page"
                 android:textAllCaps="false"
                 tools:ignore="TextContrastCheck" />
 
