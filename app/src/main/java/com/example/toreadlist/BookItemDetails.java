@@ -122,16 +122,7 @@ public class BookItemDetails extends AppCompatActivity {
                 Intent i = new Intent(appContext, EditBookItem.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("title", title);
-
-                try{
-                    i.putExtra("language", language_codes.get(language));
-                }
-                catch(Exception ex)
-                {
-                    i.putExtra("language", language);
-                }
-
-
+                i.putExtra("language", language);
                 i.putExtra("publisher", publisher);
                 i.putExtra("publishedDate", publishedDate);
                 i.putExtra("description", description);
