@@ -16,6 +16,7 @@ public class BookFetch {
     private String bookDetailsLink;
     private String buyLink;
 
+    private String language;
     private ArrayList<String> authors;
 
 
@@ -92,6 +93,13 @@ public class BookFetch {
         this.buyLink = buyLink;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
     public ArrayList<String> getAuthors() {
         return authors;
@@ -103,10 +111,11 @@ public class BookFetch {
 
     public BookFetch(String title,  String description, String publisher, String publishedDate,
                      int pageCount, Double averageRating,String imageUrl,
-                     String bookDetailsLink, String buyLink,
+                     String bookDetailsLink, String buyLink, String language,
                      ArrayList<String> authors) {
         this.title = title;
         this.description = description;
+        this.language = language;
 
         this.publisher = publisher;
         this.publishedDate = publishedDate;

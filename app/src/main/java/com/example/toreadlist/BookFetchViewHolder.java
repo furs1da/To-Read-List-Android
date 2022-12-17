@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BookFetchViewHolder extends RecyclerView.ViewHolder  {
-    TextView titleTV, publisherTV, pageCountTV, averageRatingTV, dateTV;
+    TextView titleTV, publisherTV, pageCountTV, averageRatingTV, dateTV, languageTV;
     ImageView bookIV;
 
     public BookFetchViewHolder(View itemView) {
@@ -17,6 +17,7 @@ public class BookFetchViewHolder extends RecyclerView.ViewHolder  {
         pageCountTV = itemView.findViewById(R.id.bookPageCountTV);
         averageRatingTV = itemView.findViewById(R.id.bookAverageRatingTV);
         dateTV = itemView.findViewById(R.id.bookPublishedDateTV);
+        languageTV = itemView.findViewById(R.id.bookLanguageTV);
         bookIV = itemView.findViewById(R.id.bookImageIV);
     }
 }
