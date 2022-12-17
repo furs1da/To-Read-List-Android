@@ -125,6 +125,16 @@
                 android:text="Google Books Page"
                 android:textAllCaps="false"
                 tools:ignore="TextContrastCheck" />
+            <Button
+                android:id="@+id/bookDetailsAddToReadListBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="#006494"
+                android:text="Add to Read List"
+                android:textAllCaps="false"
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
     </LinearLayout>

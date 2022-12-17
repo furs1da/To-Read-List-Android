@@ -36,7 +36,7 @@ public class BookFetchDetails extends AppCompatActivity {
     private ArrayList<String> authors;
 
     TextView titleTV, publisherTV, descTV, pageTV, publishDateTV, languageTV, averageRatingTV;
-    Button bookDetailsFullInformationBtn;
+    Button bookDetailsFullInformationBtn, bookDetailsAddToReadListBtn;
     private ImageView bookIV;
 
 
@@ -58,6 +58,7 @@ public class BookFetchDetails extends AppCompatActivity {
         languageTV = findViewById(R.id.bookDetailsLanguageTV);
         averageRatingTV = findViewById(R.id.bookDetailsAverageRatingTV);
         bookDetailsFullInformationBtn = findViewById(R.id.bookDetailsFullInformationBtn);
+        bookDetailsAddToReadListBtn = findViewById(R.id.bookDetailsAddToReadListBtn);
         bookIV = findViewById(R.id.bookDetailsIV);
 
 
@@ -99,6 +100,23 @@ public class BookFetchDetails extends AppCompatActivity {
                 Uri uri = Uri.parse(infoLink);
                 Intent i = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(i);
+            }
+        });
+
+        DBHelper dbhelp = new DBHelper( this);
+
+        bookDetailsAddToReadListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                BookItem bookItem = dbhelp.getBookByTitle(title);
+                if (bookItem.getTitle() == null) {
+                    dbhelp.addBookToReadingList(new BookItem(title, description, publisher, publishedDate, pageCount, thumbnail, infoLink, language, false));
+                    Toast.makeText(BookFetchDetails.this, "This book was added to your reading list...", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(BookFetchDetails.this, "This book already exists in your reading list...", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

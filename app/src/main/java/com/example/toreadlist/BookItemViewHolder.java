@@ -17,7 +17,7 @@ public class BookItemViewHolder extends RecyclerView.ViewHolder {
         publisherTV = itemView.findViewById(R.id.bookItemPublisherTV);
         pageCountTV = itemView.findViewById(R.id.bookItemPageCountTV);
         isFinishedTV = itemView.findViewById(R.id.bookItemFinishedTV);
-        dateTV = itemView.findViewById(R.id.bookItemLanguageTV);
+        dateTV = itemView.findViewById(R.id.bookPublishedDateTV);
         languageTV = itemView.findViewById(R.id.bookItemLanguageTV);
         bookIV = itemView.findViewById(R.id.bookItemImageIV);
     }

@@ -168,7 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursorBooks = db.rawQuery(selectQuery, null);
         BookItem bookItem = new BookItem();
         // on below line we are creating a cursor with query to read data from database.
-        if (cursorBooks != null) {
+        if (cursorBooks != null  && cursorBooks.getCount() > 0) {
             cursorBooks.moveToFirst();
             bookItem.setId(cursorBooks.getInt(cursorBooks.getColumnIndex(ID_COL)));
             bookItem.setTitle(cursorBooks.getString(cursorBooks.getColumnIndex(TITLE_COL)));
@@ -193,13 +193,13 @@ public class DBHelper extends SQLiteOpenHelper {
         // database for reading our database.
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selectQuery = "SELECT * FROM " + TB_NAME + " WHERE "+ TITLE_COL + " =" + title;
+        String selectQuery = "SELECT * FROM " + TB_NAME + " WHERE "+ TITLE_COL + " =" + "'" + title + "'";
 
 
         Cursor cursorBooks = db.rawQuery(selectQuery, null);
         BookItem bookItem = new BookItem();
         // on below line we are creating a cursor with query to read data from database.
-        if (cursorBooks != null) {
+        if (cursorBooks != null && cursorBooks.getCount() > 0) {
             cursorBooks.moveToFirst();
             bookItem.setId(cursorBooks.getInt(cursorBooks.getColumnIndex(ID_COL)));
             bookItem.setTitle(cursorBooks.getString(cursorBooks.getColumnIndex(TITLE_COL)));

@@ -43,14 +43,14 @@ public class ReadingList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reading_list);
 
-        getSupportActionBar().setTitle("Your Reading List");
+        getSupportActionBar().setTitle("My Reading List");
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor("#0582ca"));
         // Set BackgroundDrawable
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         progressBar = findViewById(R.id.bookItemLoadingBarPB);
-
+        getBooksInfo();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ReadingList extends AppCompatActivity {
 
         DBHelper dbhelp=new DBHelper(this);
         bookInfoArrayList = new ArrayList<>();
-        ArrayList<BookItem> bookInfoArrayListAdapter = new ArrayList<>();
+        //ArrayList<BookItem> bookInfoArrayListAdapter = new ArrayList<>();
 
         bookInfoArrayList = dbhelp.readBookList();
 
@@ -123,11 +123,7 @@ public class ReadingList extends AppCompatActivity {
 
                 // inside on response method we are extracting all our json data.
                 try {
-                    for (int i = 0; i < bookInfoArrayList.size(); i++) {
-
-                        bookInfoArrayListAdapter.add(bookInfoArrayList.get(i));
-
-                        BookItemAdapter adapter = new BookItemAdapter(bookInfoArrayListAdapter, ReadingList.this);
+                        BookItemAdapter adapter = new BookItemAdapter(bookInfoArrayList, ReadingList.this);
 
 
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ReadingList.this, RecyclerView.VERTICAL, false);
@@ -136,7 +132,7 @@ public class ReadingList extends AppCompatActivity {
 
                         mRecyclerView.setLayoutManager(linearLayoutManager);
                         mRecyclerView.setAdapter(adapter);
-                    }
+
                 }
                 catch (Exception e) {
                     e.printStackTrace();
