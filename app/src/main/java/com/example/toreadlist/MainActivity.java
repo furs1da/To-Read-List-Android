@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -86,26 +87,45 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item1:
-                Toast.makeText(this, "Find new book",
-                        Toast.LENGTH_SHORT).show();
-//                To start an activity:
-//                startActivity(new Intent(
-//                        getApplicationContext(), MainActivity.class));
+            case R.id.FindBook:
+                Toast.makeText(this, "Find new book", Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(
+                //getApplicationContext(), MainActivity.class));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                        startActivity(i);
+                    }
+                },500);
                 return true;
-            case R.id.item2:
+            case R.id.ReadingList:
                 Toast.makeText(this, "Library",
                         Toast.LENGTH_SHORT).show();
                 //                To start an activity:
-//                startActivity(new Intent(
-//                        getApplicationContext(), MainActivity.class));
+                            //startActivity(new Intent(
+                               //getApplicationContext(), ReadingList.class));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i=new Intent(getApplicationContext(),ReadingList.class);
+                        startActivity(i);
+                    }
+                },500);
                 return true;
-            case R.id.item3:
+            case R.id.About:
                 Toast.makeText(this, "About",
                         Toast.LENGTH_SHORT).show();
                 //                To start an activity:
-//                startActivity(new Intent(
-//                        getApplicationContext(), MainActivity.class));
+                        //startActivity(new Intent(
+                            //getApplicationContext(), AboutPage.class));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i=new Intent(getApplicationContext(), AboutPage.class);
+                        startActivity(i);
+                    }
+                },500);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

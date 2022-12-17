@@ -28,7 +28,6 @@ public class BookFetchAdapter extends RecyclerView.Adapter<BookFetchViewHolder>{
     private ArrayList<BookFetch> bookFetchArrayList;
     private Context appContext;
 
-    // creating constructor for array list and context.
     public BookFetchAdapter(ArrayList<BookFetch> bookFetchArrayList, Context appContext) {
         this.bookFetchArrayList = bookFetchArrayList;
         this.appContext = appContext;
@@ -45,8 +44,7 @@ public class BookFetchAdapter extends RecyclerView.Adapter<BookFetchViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull BookFetchViewHolder holder, int position) {
 
-        // inside on bind view holder method we are
-        // setting ou data to each UI component.
+
         BookFetch fetchedBook = bookFetchArrayList.get(position);
         holder.titleTV.setText(fetchedBook.getTitle());
         holder.publisherTV.setText(fetchedBook.getPublisher());
@@ -65,17 +63,16 @@ public class BookFetchAdapter extends RecyclerView.Adapter<BookFetchViewHolder>{
             holder.languageTV.setText("Undefined");
         }
 
-        // below line is use to set image from URL in our image view.
+
         Picasso.get().load(fetchedBook.getImageUrl()).into(holder.bookIV);
 
 
 
-        // below line is use to add on click listener for our item of recycler view.
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // inside on click listener method we are calling a new activity
-                // and passing all the data of that item in next intent.
+
                 Intent i = new Intent(appContext, BookFetchDetails.class);
                 i.putExtra("title", fetchedBook.getTitle());
                 i.putExtra("authors", fetchedBook.getAuthors());
@@ -103,8 +100,7 @@ public class BookFetchAdapter extends RecyclerView.Adapter<BookFetchViewHolder>{
                     i.putExtra("averageRating","Average rating: Not rated");
                 }
 
-                // after passing that data we are
-                // starting our new  intent.
+
                 appContext.startActivity(i);
             }
         });
@@ -112,8 +108,6 @@ public class BookFetchAdapter extends RecyclerView.Adapter<BookFetchViewHolder>{
 
     @Override
     public int getItemCount() {
-        // inside get item count method we
-        // are returning the size of our array list.
         return bookFetchArrayList.size();
     }
 }

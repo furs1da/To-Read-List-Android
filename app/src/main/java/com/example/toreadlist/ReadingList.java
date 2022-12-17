@@ -1,7 +1,5 @@
 package com.example.toreadlist;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,20 +8,49 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class AboutPage extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import android.os.Bundle;
+
+public class ReadingList extends AppCompatActivity {
+
+    private ArrayList<BookItem> bookInfoArrayList;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reading_list);
 
-        setContentView(R.layout.activity_about_page);
-        getSupportActionBar().setTitle("About Page");
+        getSupportActionBar().setTitle("Your Reading List");
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor("#0582ca"));
         // Set BackgroundDrawable
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
+        progressBar = findViewById(R.id.bookItemLoadingBarPB);
+
     }
 
     @Override
@@ -71,7 +98,7 @@ public class AboutPage extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                        Intent i=new Intent(getApplicationContext(),AboutPage.class);
                         startActivity(i);
                     }
                 },500);
@@ -80,4 +107,41 @@ public class AboutPage extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+    private void getBooksInfo() {
+
+        // creating a new array list.
+
+        DBHelper dbhelp=new DBHelper(this);
+        bookInfoArrayList = new ArrayList<>();
+        ArrayList<BookItem> bookInfoArrayListAdapter = new ArrayList<>();
+
+        bookInfoArrayList = dbhelp.readBookList();
+
+        progressBar.setVisibility(View.GONE);
+
+                // inside on response method we are extracting all our json data.
+                try {
+                    for (int i = 0; i < bookInfoArrayList.size(); i++) {
+
+                        bookInfoArrayListAdapter.add(bookInfoArrayList.get(i));
+
+                        BookItemAdapter adapter = new BookItemAdapter(bookInfoArrayListAdapter, ReadingList.this);
+
+
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ReadingList.this, RecyclerView.VERTICAL, false);
+                        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bookItemRecyclerView);
+
+
+                        mRecyclerView.setLayoutManager(linearLayoutManager);
+                        mRecyclerView.setAdapter(adapter);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(ReadingList.this, "No Data Found :(" + e, Toast.LENGTH_SHORT).show();
+                }
+        }
+
 }
