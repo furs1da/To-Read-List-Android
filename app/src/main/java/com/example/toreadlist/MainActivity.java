@@ -1,12 +1,17 @@
 package com.example.toreadlist;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,6 +68,42 @@ public class MainActivity extends AppCompatActivity {
                 getBooksInfo(searchEdt.getText().toString());
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Toast.makeText(this, "Home",
+                        Toast.LENGTH_SHORT).show();
+//                To start an activity:
+//                startActivity(new Intent(
+//                        getApplicationContext(), MainActivity.class));
+                return true;
+            case R.id.item2:
+                Toast.makeText(this, "Library",
+                        Toast.LENGTH_SHORT).show();
+                //                To start an activity:
+//                startActivity(new Intent(
+//                        getApplicationContext(), MainActivity.class));
+                return true;
+            case R.id.item3:
+                Toast.makeText(this, "About",
+                        Toast.LENGTH_SHORT).show();
+                //                To start an activity:
+//                startActivity(new Intent(
+//                        getApplicationContext(), MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void getBooksInfo(String query) {
