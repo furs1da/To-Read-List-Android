@@ -30,36 +30,41 @@ import java.util.ArrayList;
 
 import static com.example.toreadlist.BookValues.*;
 
-public class BookFetchDetails extends AppCompatActivity {
-    String title, publisher, publishedDate, description, thumbnail, previewLink, infoLink, buyLink, language, averageRating;
-    int pageCount;
-    private ArrayList<String> authors;
+public class BookItemDetails extends AppCompatActivity {
 
-    TextView titleTV, publisherTV, descTV, pageTV, publishDateTV, languageTV, averageRatingTV;
-    Button bookDetailsFullInformationBtn, bookDetailsAddToReadListBtn;
+    String title, publisher, publishedDate, description, thumbnail, previewLink, infoLink, buyLink, language;
+    Boolean isCompleted;
+    int pageCount, id;
+
+    TextView titleTV, publisherTV, descTV, pageTV, publishDateTV, languageTV, isCompletedTV;
+    Button bookDetailsFullInformationBtn, bookDetailsEditBtn, bookDetailsRemoveBtn;
     private ImageView bookIV;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_fetch_details);
+        setContentView(R.layout.activity_book_item_details);
         getSupportActionBar().setTitle("Book Details");
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor("#0582ca"));
         // Set BackgroundDrawable
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
-        titleTV = findViewById(R.id.bookDetailsTitleTV);
-        publisherTV = findViewById(R.id.bookDetailsPublisherTV);
-        descTV = findViewById(R.id.bookDetailsDescriptionTV);
-        pageTV = findViewById(R.id.bookDetailsNoPagesTV);
-        publishDateTV = findViewById(R.id.bookDetailsPublishDateTV);
-        languageTV = findViewById(R.id.bookDetailsLanguageTV);
-        averageRatingTV = findViewById(R.id.bookDetailsAverageRatingTV);
-        bookDetailsFullInformationBtn = findViewById(R.id.bookDetailsFullInformationBtn);
-        bookDetailsAddToReadListBtn = findViewById(R.id.bookDetailsAddToReadListBtn);
-        bookIV = findViewById(R.id.bookDetailsIV);
+        titleTV = findViewById(R.id.bookItemDetailsTitleTV);
+        publisherTV = findViewById(R.id.bookItemDetailsPublisherTV);
+        descTV = findViewById(R.id.bookItemDetailsDescriptionTV);
+        pageTV = findViewById(R.id.bookItemDetailsNoPagesTV);
+        isCompletedTV = findViewById(R.id.bookItemDetailsCompletedTV);
+
+        publishDateTV = findViewById(R.id.bookItemDetailsPublishDateTV);
+        languageTV = findViewById(R.id.bookItemDetailsLanguageTV);
+        bookDetailsFullInformationBtn = findViewById(R.id.ItemDetailsInfoDetails);
+
+
+        bookDetailsEditBtn = findViewById(R.id.bookItemDetailsEditBtn);
+        bookDetailsRemoveBtn = findViewById(R.id.bookItemDetailsRemoveBtn);
+
+        bookIV = findViewById(R.id.bookItemDetailsIV);
 
 
         title = getIntent().getStringExtra("title");
@@ -67,26 +72,28 @@ public class BookFetchDetails extends AppCompatActivity {
         publishedDate = getIntent().getStringExtra("publishedDate");
         description = getIntent().getStringExtra("description");
         pageCount = getIntent().getIntExtra("pageCount", 0);
+        id = getIntent().getIntExtra("id", 0);
+
         thumbnail = getIntent().getStringExtra("imageUrl");
-        previewLink = getIntent().getStringExtra("previewLink");
         infoLink = getIntent().getStringExtra("bookDetailsLink");
-        buyLink = getIntent().getStringExtra("buyLink");
         language = getIntent().getStringExtra("language");
-        averageRating = getIntent().getStringExtra("averageRating");
+
+        isCompleted = getIntent().getBooleanExtra("isCompleted", false);
 
 
         titleTV.setText(title);
         publisherTV.setText(publisher);
         publishDateTV.setText("Published On : " + publishedDate);
         descTV.setText(description);
-        languageTV.setText(language);
-        averageRatingTV.setText(averageRating);
+        languageTV.setText("Language" + language);
+        isCompletedTV.setText(isCompleted == true ? "Completed" : "In Progress");
 
         pageTV.setText("# Of Pages : " + pageCount);
 
-        if(thumbnail != null && thumbnail != "" && !thumbnail.isEmpty() && !thumbnail.trim().isEmpty())
+        if(thumbnail != null && thumbnail != "")
             Picasso.get().load(thumbnail).into(bookIV);
 
+        DBHelper dbhelp = new DBHelper( this);
 
 
         bookDetailsFullInformationBtn.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +101,7 @@ public class BookFetchDetails extends AppCompatActivity {
             public void onClick(View v) {
                 if (infoLink.isEmpty()) {
 
-                    Toast.makeText(BookFetchDetails.this, "There is no buy page exist in the Google Books API for this book...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookItemDetails.this, "There is no buy page exist in the Google Books API for this book...", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -104,23 +111,29 @@ public class BookFetchDetails extends AppCompatActivity {
             }
         });
 
-        DBHelper dbhelp = new DBHelper( this);
 
-        bookDetailsAddToReadListBtn.setOnClickListener(new View.OnClickListener() {
+
+        bookDetailsRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try
+                {
+                    dbhelp.deleteBook(id);
+                    Toast.makeText(BookItemDetails.this, "This book was removed from your reading list...", Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent(getApplicationContext(),ReadingList.class);
+                    startActivity(i);
+                    finish();
+                }
+                catch (Exception ex)
+                {
 
-                BookItem bookItem = dbhelp.getBookByTitle(title);
-                if (bookItem.getTitle() == null) {
-                    dbhelp.addBookToReadingList(new BookItem(title, description, publisher, publishedDate, pageCount, thumbnail, infoLink, language, false));
-                    Toast.makeText(BookFetchDetails.this, "This book was added to your reading list...", Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    Toast.makeText(BookFetchDetails.this, "This book already exists in your reading list...", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,10 +152,10 @@ public class BookFetchDetails extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(i);
                     }
-                },500);
+                }, 500);
                 return true;
             case R.id.ReadingList:
                 Toast.makeText(this, "Library",
@@ -153,10 +166,10 @@ public class BookFetchDetails extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent i=new Intent(getApplicationContext(),ReadingList.class);
+                        Intent i = new Intent(getApplicationContext(), ReadingList.class);
                         startActivity(i);
                     }
-                },500);
+                }, 500);
                 return true;
             case R.id.About:
                 Toast.makeText(this, "About",
@@ -167,10 +180,10 @@ public class BookFetchDetails extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent i=new Intent(getApplicationContext(),AboutPage.class);
+                        Intent i = new Intent(getApplicationContext(), AboutPage.class);
                         startActivity(i);
                     }
-                },500);
+                }, 500);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

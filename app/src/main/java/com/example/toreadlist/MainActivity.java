@@ -173,7 +173,12 @@ public class MainActivity extends AppCompatActivity {
                         String description = volumeObj.optString("description");
                         int pageCount = volumeObj.optInt("pageCount");
                         JSONObject imageLinks = volumeObj.optJSONObject("imageLinks");
-                        String thumbnail = imageLinks.optString("thumbnail");
+                        String thumbnail = "";
+                        if(imageLinks != null)
+                        {
+                            thumbnail = imageLinks.optString("thumbnail");
+                        }
+
                         String infoLink = volumeObj.optString("infoLink");
                         JSONObject saleInfoObj = itemsObj.optJSONObject("saleInfo");
                         String buyLink = saleInfoObj.optString("buyLink");

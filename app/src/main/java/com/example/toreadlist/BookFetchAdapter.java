@@ -64,7 +64,8 @@ public class BookFetchAdapter extends RecyclerView.Adapter<BookFetchViewHolder>{
         }
 
 
-        Picasso.get().load(fetchedBook.getImageUrl()).into(holder.bookIV);
+        if(fetchedBook.getImageUrl() != null && fetchedBook.getImageUrl() != "")
+            Picasso.get().load(fetchedBook.getImageUrl()).into(holder.bookIV);
 
 
 

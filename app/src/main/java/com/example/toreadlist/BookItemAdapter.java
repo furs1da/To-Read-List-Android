@@ -62,7 +62,8 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemViewHolder>{
             holder.languageTV.setText(bookItem.getLanguage());
         }
 
-        Picasso.get().load(bookItem.getImageUrl()).into(holder.bookIV);
+        if(bookItem.getImageUrl() != null && bookItem.getImageUrl() != "")
+            Picasso.get().load(bookItem.getImageUrl()).into(holder.bookIV);
 
 
 
@@ -70,7 +71,7 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemViewHolder>{
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(appContext, BookFetchDetails.class);
+                Intent i = new Intent(appContext, BookItemDetails.class);
                 i.putExtra("title", bookItem.getTitle());
 
                 try{
