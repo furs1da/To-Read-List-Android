@@ -2,6 +2,7 @@ package com.example.toreadlist;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -32,13 +33,15 @@ import static com.example.toreadlist.BookValues.*;
 
 public class BookItemDetails extends AppCompatActivity {
 
-    String title, publisher, publishedDate, description, thumbnail, previewLink, infoLink, buyLink, language;
+    String title, publisher, publishedDate, description, thumbnail, infoLink, language;
     Boolean isCompleted;
     int pageCount, id;
 
     TextView titleTV, publisherTV, descTV, pageTV, publishDateTV, languageTV, isCompletedTV;
     Button bookDetailsFullInformationBtn, bookDetailsEditBtn, bookDetailsRemoveBtn;
     private ImageView bookIV;
+
+    private Context appContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,8 @@ public class BookItemDetails extends AppCompatActivity {
 
         DBHelper dbhelp = new DBHelper( this);
 
+        this.appContext = getApplicationContext();
+
 
         bookDetailsFullInformationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +113,35 @@ public class BookItemDetails extends AppCompatActivity {
                 Uri uri = Uri.parse(infoLink);
                 Intent i = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(i);
+            }
+        });
+
+        bookDetailsEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(appContext, EditBookItem.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("title", title);
+
+                try{
+                    i.putExtra("language", language_codes.get(language));
+                }
+                catch(Exception ex)
+                {
+                    i.putExtra("language", language);
+                }
+
+
+                i.putExtra("publisher", publisher);
+                i.putExtra("publishedDate", publishedDate);
+                i.putExtra("description", description);
+                i.putExtra("pageCount",pageCount);
+                i.putExtra("imageUrl", thumbnail);
+                i.putExtra("isCompleted", isCompleted);
+                i.putExtra("id", id);
+                i.putExtra("bookDetailsLink", infoLink);
+
+                appContext.startActivity(i);
             }
         });
 
