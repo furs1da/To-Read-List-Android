@@ -98,6 +98,11 @@ public class BookFetchAdapter extends RecyclerView.Adapter<BookFetchViewHolder>{
                 i.putExtra("bookDetailsLink", fetchedBook.getBookDetailsLink());
                 i.putExtra("buyLink", fetchedBook.getBuyLink());
 
+                i.putExtra("averageRating","Average rating: " + fetchedBook.getAverageRating().toString() + "/5");
+                if(Double.isNaN(fetchedBook.getAverageRating())) {
+                    i.putExtra("averageRating","Average rating: Not rated");
+                }
+
                 // after passing that data we are
                 // starting our new  intent.
                 appContext.startActivity(i);
