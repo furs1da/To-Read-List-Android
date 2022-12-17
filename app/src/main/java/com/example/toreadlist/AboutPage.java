@@ -1,6 +1,8 @@
 package com.example.toreadlist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,9 +12,13 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class AboutPage extends AppCompatActivity {
+
+    Button notifyBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,22 @@ public class AboutPage extends AppCompatActivity {
                 = new ColorDrawable(Color.parseColor("#0582ca"));
         // Set BackgroundDrawable
         getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
+        notifyBtn = findViewById(R.id.notify_btn);
+
+        notifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(AboutPage.this, "This is project #10 notification");
+                builder.setContentTitle("The Title");
+                builder.setContentText("Hello from group 10");
+                builder.setSmallIcon(R.drawable.ic_launcher_background);
+                builder.setAutoCancel(true);
+
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(AboutPage.this);
+                managerCompat.notify(1, builder.build());
+            }
+        });
     }
 
     @Override
