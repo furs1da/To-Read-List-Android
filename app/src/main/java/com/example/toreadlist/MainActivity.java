@@ -1,6 +1,8 @@
 package com.example.toreadlist;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,7 +46,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        getSupportActionBar().setTitle("Find Your Book!");
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#0582ca"));
+        // Set BackgroundDrawable
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         // initializing our views.
         progressBar = findViewById(R.id.idLoadingBar);
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item1:
-                Toast.makeText(this, "Home",
+                Toast.makeText(this, "Find new book",
                         Toast.LENGTH_SHORT).show();
 //                To start an activity:
 //                startActivity(new Intent(

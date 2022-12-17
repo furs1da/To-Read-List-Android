@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,7 +43,11 @@ public class BookFetchDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_fetch_details);
-        getSupportActionBar().hide();
+        getSupportActionBar().setTitle("Book Details");
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#0582ca"));
+        // Set BackgroundDrawable
+        getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
         titleTV = findViewById(R.id.bookDetailsTitleTV);
         publisherTV = findViewById(R.id.bookDetailsPublisherTV);
@@ -91,5 +100,41 @@ public class BookFetchDetails extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Toast.makeText(this, "Find new book",
+                        Toast.LENGTH_SHORT).show();
+//                To start an activity:
+//                startActivity(new Intent(
+//                        getApplicationContext(), MainActivity.class));
+                return true;
+            case R.id.item2:
+                Toast.makeText(this, "Library",
+                        Toast.LENGTH_SHORT).show();
+                //                To start an activity:
+//                startActivity(new Intent(
+//                        getApplicationContext(), MainActivity.class));
+                return true;
+            case R.id.item3:
+                Toast.makeText(this, "About",
+                        Toast.LENGTH_SHORT).show();
+                //                To start an activity:
+//                startActivity(new Intent(
+//                        getApplicationContext(), MainActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
