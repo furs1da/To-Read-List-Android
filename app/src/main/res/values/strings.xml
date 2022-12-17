@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">ToReadList</string>
+    <string name="app_about">
+        Have you ever wanted to read books but forgot the ones you had on your list? Well, look no further because that\'s the problem that To-Read-List is designed to solve.
+
+        With the help of our app, you are able to browse Google\'s library of all types of books. In addition, you can immediately access any books details like Title, Publisher, Page Count, and Average rating.
+
+        In case you can\'t find the book you were looking for, you can also save it using our form and we will let you know once it becomes available.
+
+        The main idea behind it is to assist users with saving the books they want to read later. They are able to access their library and add new books to it along the time.
+    </string>
+    <string name="app_how_to">
+        Step 1: Find your book on the main page using the search bar
+
+        Step 2: If you see the book you were looking for, press it to expand and see additional information
+
+        Step 3: You can save the book if needed, just add it to your library using the "Add" button
+
+        Step 4: In case you can not find your book, you can add it using the form found in your library.
+    </string>
 </resources>
